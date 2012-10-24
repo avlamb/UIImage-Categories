@@ -65,20 +65,24 @@
     CGFloat scale = [[UIScreen mainScreen] scale];
     borderSize *= scale;
     cornerRadius *= scale;
-    
+
+    CGFloat scaledThumbnailSize = thumbnailSize*scale;
+  
     UIImage *resizedImage = [self resizedImageWithContentMode:UIViewContentModeScaleAspectFill
                                                        bounds:CGSizeMake(thumbnailSize, thumbnailSize)
                                          interpolationQuality:quality];
-    
+
     // Crop out any part of the image that's larger than the thumbnail size
     // The cropped rect must be centered on the resized image
     // Round the origin points so that the size isn't altered when CGRectIntegral is later invoked
-    CGRect cropRect = CGRectMake(round((resizedImage.size.width - thumbnailSize) / 2),
-                                 round((resizedImage.size.height - thumbnailSize) / 2),
-                                 thumbnailSize,
-                                 thumbnailSize);
+  
+  
+    CGRect cropRect = CGRectMake(round((resizedImage.size.width - scaledThumbnailSize) / 2),
+                                 round((resizedImage.size.height - scaledThumbnailSize) / 2),
+                                 scaledThumbnailSize,
+                                 scaledThumbnailSize);
     UIImage *croppedImage = [resizedImage croppedImage:cropRect];
-    
+  
     UIImage *transparentBorderImage = borderSize ? [croppedImage transparentBorderImage:borderSize] : croppedImage;
     
     return [transparentBorderImage roundedCornerImage:cornerRadius borderSize:borderSize];

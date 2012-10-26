@@ -14,7 +14,8 @@
 - (UIImage *)roundedCornerImage:(NSInteger)cornerSize borderSize:(NSInteger)borderSize {
     // If the image does not have an alpha layer, add one
     UIImage *image = [self imageWithAlpha];
-    
+    float scale = self.scale;
+    cornerSize *= scale;
     // Build a context that's the same dimensions as the new size
     CGContextRef context = CGBitmapContextCreate(NULL,
                                                  image.size.width * self.scale,
@@ -26,7 +27,10 @@
 
     // Create a clipping path with rounded corners
     CGContextBeginPath(context);
-    [self addRoundedRectToPath:CGRectMake(borderSize * self.scale, borderSize * self.scale, image.size.width * self.scale - borderSize * self.scale * 2, image.size.height * self.scale - borderSize * self.scale * 2)
+    [self addRoundedRectToPath:CGRectMake(borderSize * scale,
+                                          borderSize * scale,
+                                          image.size.width * scale - borderSize * scale * 2,
+                                          image.size.height * scale - borderSize * scale * 2)
                        context:context
                      ovalWidth:cornerSize
                     ovalHeight:cornerSize];

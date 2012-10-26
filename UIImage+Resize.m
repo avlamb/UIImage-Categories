@@ -64,7 +64,7 @@
     // Take Retina display into account
     CGFloat scale = [[UIScreen mainScreen] scale];
     borderSize *= scale;
-    cornerRadius *= scale;
+    //cornerRadius *= scale;
 
     CGFloat scaledThumbnailSize = thumbnailSize*scale;
   
@@ -179,7 +179,7 @@
     
     // Get the resized image from the context and a UIImage
     CGImageRef newImageRef = CGBitmapContextCreateImage(bitmap);
-    UIImage *newImage = [UIImage imageWithCGImage:newImageRef scale:scale orientation:UIImageOrientationUp];
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef scale:self.scale orientation:UIImageOrientationUp];
     
     // Clean up
     CGContextRelease(bitmap);
